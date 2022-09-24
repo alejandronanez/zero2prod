@@ -6,7 +6,7 @@ async fn greet(req: HttpRequest) -> impl Responder {
     format!("Hello {}!", &name)
 }
 
-// #[tokio::main]
+#[tokio::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
