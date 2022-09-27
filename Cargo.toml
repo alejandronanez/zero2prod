@@ -17,6 +17,24 @@ reqwest = "0.11"
 actix-web = "4"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 serde = { version = "1", features = ["derive"]}
+# table-like syntax to avoid long lines!
+[dependencies.sqlx]
+version = "0.6.0"
+default-features = false
+features = [
+    # tell sqlx to use tokio runtime for its futures and rustls as TLS backend ?
+    "runtime-tokio-rustls",
+    # access to sqlx::query! and sqlx::query_as!
+    "macros",
+    # enable Postgres-specific fn
+    "postgres",
+    # support for SQL UUIDs - for the uuid column - uuid crate
+    "uuid",
+    # map SQL timestamptz to DateTime<T> - chrono crate
+    "chrono",
+    # access fns from sqlx-cli to manage migrations -> for the test suite
+    "migrate"
+]
 
 [target.x86_64-apple-darwin]
 rustflags = ["-C", "link-arg=-fuse-ld=/usr/local/bin/zld"]
