@@ -2,6 +2,19 @@
 set -x
 set -eo pipefail
 
+if ! [ -x "$(command -v psql)" ]; then
+  echo >&2 "Error: psql is not installed."
+  exit 1
+fi
+if ! [ -x "$(command -v sqlx)" ]; then
+  echo >&2 "Error: sqlx is not installed."
+  echo >&2 "Use:"
+  echo >&2 "    cargo install --version=0.6.0 sqlx-cli \
+--no-default-features --features rustls,postgres"
+  echo >&2 "to install it."
+  exit 1
+fi
+
 # Check if custom user has been set, otherwise default to 'postgres'
 DB_USER=${POSTGRES_USER:=postgres}
 # Check if custom password has been set, otherwise default to 'password'
@@ -27,7 +40,7 @@ docker run \
     >&2 echo "Postgres is still unavailable - sleeping"
     sleep 1
   done
-  
+
   >&2 echo "Postgres is up and running on port ${DB_PORT}!"
 
   DATABASE_URL=postgres://${DB_USER}:${DB_PASSWORD}@localhost:${DB_PORT}/${DB_NAME}
