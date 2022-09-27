@@ -32,8 +32,10 @@ then
     -e POSTGRES_USER=${DB_USER} \
     -e POSTGRES_PASSWORD=${DB_PASSWORD} \
     -e POSTGRES_DB=${DB_NAME} \
+    -v newsletter-data:/var/lib/postgres \
     -p "${DB_PORT}":5432 \
     -d postgres \
+    --name kind_wozniak \
     postgres -N 1000
     # ^ Increased maximum number of connections for testing purposes
 fi
