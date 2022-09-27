@@ -20,3 +20,7 @@ docker run \
   -d postgres \
   postgres -N 1000
   # ^ Increased maximum number of connections for testing purposes
+
+  DATABASE_URL=postgres://${DB_USER}:${DB_PASSWORD}@localhost:${DB_PORT}/${DB_NAME}
+  export DATABASE_URL
+  sqlx database create
